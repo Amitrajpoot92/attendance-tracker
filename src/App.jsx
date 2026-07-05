@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Public Pages
 import Home from "./pages/home";
 import Register from "./pages/register"; 
 import Login from "./pages/login";
 
-// ✅ FIXED: Screenshot ke hisaab se ye files 'Vendor' folder ke andar hain
-import DashboardLayout from "./components/Vendor/DashboardLayout";
-import ProtectedRoute from "./components/Vendor/ProtectedRoute"; 
+// Components
+import DashboardLayout from "./components/DashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute"; 
 
 // Vendor Pages
 import VendorDashboard from "./pages/vendor/VendorDashboard";
