@@ -2,16 +2,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Register from "./pages/register"; 
 import Login from "./pages/login";
-import DashboardLayout from "./components/DashboardLayout";
-import ProtectedRoute from "./components/ProtectedRoute"; 
+
+// ✅ FIXED: Screenshot ke hisaab se ye files 'Vendor' folder ke andar hain
+import DashboardLayout from "./components/Vendor/DashboardLayout";
+import ProtectedRoute from "./components/Vendor/ProtectedRoute"; 
 
 // Vendor Pages
 import VendorDashboard from "./pages/vendor/VendorDashboard";
-import ManageCustomers from "./pages/vendor/ManageCustomers";   // <-- Naya
-import DailyDeliveries from "./pages/vendor/DailyDeliveries";   // <-- Naya
-import BillingPayments from "./pages/vendor/BillingPayments";   // <-- Naya
-import SettingsProfile from "./pages/vendor/SettingsProfile";   // <-- Naya
+import ManageCustomers from "./pages/vendor/ManageCustomers";   
+import DailyDeliveries from "./pages/vendor/DailyDeliveries";   
+import BillingPayments from "./pages/vendor/BillingPayments";   
+import SettingsProfile from "./pages/vendor/SettingsProfile";   
 
+// Corporate Pages
 import CorporateDashboard from "./pages/corporate/CorporateDashboard";
 
 function App() {
@@ -34,6 +37,7 @@ function App() {
             <Route path="vendor/billing" element={<BillingPayments />} />
             <Route path="vendor/settings" element={<SettingsProfile />} />
 
+            {/* Corporate Sub-Routes */}
             <Route path="corporate" element={<CorporateDashboard />} />
           </Route>
 
