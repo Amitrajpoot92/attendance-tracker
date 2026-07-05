@@ -6,114 +6,129 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-slate-50 relative overflow-x-hidden">
       
-      {/* 🌟 Mobile-Optimized Background Blobs */}
-      <div className="absolute top-0 left-[-20%] w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 pointer-events-none"></div>
-      <div className="absolute bottom-[20%] right-[-10%] w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 pointer-events-none"></div>
+      {/* 🌟 Premium Tech Grid Background & Animated Glowing Orbs */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+      <div className="absolute top-0 left-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse pointer-events-none"></div>
+      <div className="absolute bottom-[10%] right-[-10%] w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse pointer-events-none" style={{ animationDelay: '2s' }}></div>
 
       <Header />
 
-      {/* Main Container - Optimized for Phone Width */}
-      <main className="flex-grow flex flex-col items-center px-4 py-12 relative z-10 w-full max-w-md mx-auto sm:max-w-5xl">
+      {/* Main Container */}
+      <main className="flex-grow flex flex-col items-center px-4 py-16 relative z-10 w-full max-w-md mx-auto sm:max-w-5xl">
         
         {/* HERO SECTION */}
-        <div className="text-center space-y-5 mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/60 border border-blue-200 text-blue-700 text-xs font-bold shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
-            Smart Management System
+        <div className="text-center space-y-6 mb-16 relative">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-md border border-slate-200/60 text-slate-700 text-xs font-bold shadow-sm">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+            </span>
+            Next-Gen Management
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
+          <h1 className="text-5xl sm:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
             Har Din Ka Hisaab, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 drop-shadow-sm">
               Ab Ungliyon Par!
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed px-2">
+          <p className="text-base sm:text-lg text-slate-500 leading-relaxed px-4 font-medium max-w-2xl mx-auto">
             Unorganized sector ki daily deliveries ho ya corporate office ki attendance—sab kuch ek single platform par bina kisi jhanjhat ke manage karein.
           </p>
         </div>
 
-        {/* VENDOR DETAILED SECTION */}
-        <div className="w-full bg-white rounded-[2rem] p-6 sm:p-10 shadow-xl shadow-blue-900/5 border border-blue-50 mb-8">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-3xl shrink-0 shadow-sm">
-              🛵
+        {/* VENDOR DETAILED SECTION (Glassmorphism UI) */}
+        <div className="w-full relative group mb-10">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+          <div className="relative w-full bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-7 sm:p-10 shadow-2xl shadow-blue-900/5 border border-white">
+            
+            <div className="flex items-center gap-5 mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 shrink-0">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <div>
+                <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight">Vendor Panel</h2>
+                <p className="text-sm font-bold text-blue-500 uppercase tracking-widest mt-1">Daily Deliveries</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">Vendor Panel</h2>
-              <p className="text-sm font-bold text-blue-600 mt-0.5">Daily Deliveries ke liye</p>
+
+            <p className="text-slate-600 text-sm mb-6 leading-relaxed font-medium">
+              <span className="text-slate-900 font-bold bg-blue-100 px-2 py-0.5 rounded">Target:</span> Paperboy, Dudh wale bhaiya, Tiffin services, aur Daily Needs suppliers.
+            </p>
+
+            <div className="space-y-5 mb-8">
+              {[
+                { title: "1-Click Daily Entry", desc: "Roz subah copy-pen dhoondhne ki tension khatam. Ek click me sabhi customers ki entry." },
+                { title: "Auto Billing", desc: "Mahine ke end me har customer ka bill automatic calculate hoga. 1 rupye ki galti nahi." },
+                { title: "Direct UPI Payments", desc: "Apna personal QR code lagao aur customer se direct apne account me payment lo." }
+              ].map((feature, idx) => (
+                <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm mb-1">{feature.title}</h3>
+                    <p className="text-slate-500 text-xs leading-relaxed">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <Link
+              to="/register"
+              className="relative flex items-center justify-center w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg overflow-hidden active:scale-[0.97] transition-all duration-200 shadow-xl shadow-slate-900/20"
+            >
+              <span className="relative z-10">Start as Vendor 🚀</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+            </Link>
           </div>
-
-          <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-            <strong className="text-slate-800 font-bold">Kiske liye hai?</strong> Paperboy, Dudh wale bhaiya, Tiffin services, Water supply aur un sabhi ke liye jo daily basis par items deliver karte hain.
-          </p>
-
-          <div className="bg-slate-50 rounded-2xl p-5 mb-8 border border-slate-100">
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-blue-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>1-Click Daily Entry:</strong> Roz subah copy-pen dhoondhne ki tension khatam. Mobile se ek click me sabhi customers ki entry.</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-blue-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>Auto Billing:</strong> Mahine ke end me har customer ka bill automatic calculate hoga. Hisaab me 1 rupye ki galti nahi.</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-blue-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>Direct UPI Payments:</strong> Apna personal QR code app me lagao aur customer se direct apne account me payment lo.</span>
-              </li>
-            </ul>
-          </div>
-
-          <Link
-            to="/register"
-            className="block w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center rounded-xl font-bold text-lg shadow-lg shadow-blue-200 active:scale-[0.97] transition-transform duration-200"
-          >
-            Register as Vendor
-          </Link>
         </div>
 
-        {/* CORPORATE DETAILED SECTION */}
-        <div className="w-full bg-white rounded-[2rem] p-6 sm:p-10 shadow-xl shadow-indigo-900/5 border border-indigo-50">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center text-3xl shrink-0 shadow-sm">
-              🏢
+        {/* CORPORATE DETAILED SECTION (Glassmorphism UI) */}
+        <div className="w-full relative group">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+          <div className="relative w-full bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-7 sm:p-10 shadow-2xl shadow-indigo-900/5 border border-white">
+            
+            <div className="flex items-center gap-5 mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 shrink-0">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+              </div>
+              <div>
+                <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight">Corporate Panel</h2>
+                <p className="text-sm font-bold text-indigo-500 uppercase tracking-widest mt-1">Offices & Teams</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">Corporate Panel</h2>
-              <p className="text-sm font-bold text-indigo-600 mt-0.5">Offices & Agencies ke liye</p>
+
+            <p className="text-slate-600 text-sm mb-6 leading-relaxed font-medium">
+              <span className="text-slate-900 font-bold bg-indigo-100 px-2 py-0.5 rounded">Target:</span> HR Managers, Startup Founders, Retail Shops, aur Team Leads.
+            </p>
+
+            <div className="space-y-5 mb-8">
+              {[
+                { title: "Smart Attendance", desc: "Employees ka daily Punch-In/Out easily track karein bina kisi expensive biometric device ke." },
+                { title: "Leave Management", desc: "Staff ki chhuttiyon ka record maintain rahega, aage chal kar deduction me koi confusion nahi." },
+                { title: "Salary Ready Reports", desc: "Mahine ke aakhri me bas 1 click se poori team ki attendance report nikalein aur salary banayein." }
+              ].map((feature, idx) => (
+                <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white shadow-sm border border-slate-100 hover:border-indigo-200 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm mb-1">{feature.title}</h3>
+                    <p className="text-slate-500 text-xs leading-relaxed">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <Link
+              to="/register"
+              className="flex items-center justify-center w-full py-4 bg-white border-2 border-indigo-600 text-indigo-700 rounded-2xl font-bold text-lg active:scale-[0.97] active:bg-indigo-50 transition-all duration-200 shadow-lg shadow-indigo-100"
+            >
+              Start as Corporate 🏢
+            </Link>
           </div>
-
-          <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-            <strong className="text-slate-800 font-bold">Kiske liye hai?</strong> HR Managers, Startup Founders, Retail Shops aur Team Leads ke liye jinhe staff manage karna hai.
-          </p>
-
-          <div className="bg-slate-50 rounded-2xl p-5 mb-8 border border-slate-100">
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-indigo-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>Smart Attendance:</strong> Apne employees ka daily Punch-In aur Punch-Out easily track karein bina kisi biometric device ke.</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-indigo-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>Leave Management:</strong> Staff ki chhuttiyon (leaves) ka record ek jagah maintain rahega, aage chal kar koi bahas ya confusion nahi.</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-slate-700">
-                <span className="text-indigo-500 mt-0.5 text-lg leading-none">✅</span>
-                <span><strong>Salary Ready Reports:</strong> Mahine ke aakhri me bas 1 click se poori team ki attendance report nikalein aur aasani se salary banayein.</span>
-              </li>
-            </ul>
-          </div>
-
-          <Link
-            to="/register"
-            className="block w-full py-4 bg-white border-2 border-indigo-600 text-indigo-700 text-center rounded-xl font-bold text-lg shadow-sm active:scale-[0.97] active:bg-indigo-50 transition-all duration-200"
-          >
-            Register as Corporate
-          </Link>
         </div>
 
       </main>
