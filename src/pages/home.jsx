@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import header from "../components/header";
-import footer from "../components/footer";
+// Path ekdum exact file ke naam (small letters) ke hisaab se set kiya hai
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function Home() {
   return (
