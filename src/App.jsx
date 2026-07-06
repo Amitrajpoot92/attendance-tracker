@@ -16,8 +16,12 @@ import DailyDeliveries from "./pages/vendor/DailyDeliveries";
 import BillingPayments from "./pages/vendor/BillingPayments";   
 import SettingsProfile from "./pages/vendor/SettingsProfile";   
 
-// Corporate Pages
+// Corporate Pages (PagarBook Clone Module)
 import CorporateDashboard from "./pages/corporate/CorporateDashboard";
+import ManageStaff from "./pages/corporate/ManageStaff";
+import AttendanceTracker from "./pages/corporate/AttendanceTracker";
+import SalaryCalculator from "./pages/corporate/SalaryCalculator";
+import CorporateSettings from "./pages/corporate/CorporateSettings";
 
 function App() {
   return (
@@ -41,6 +45,10 @@ function App() {
 
             {/* Corporate Sub-Routes */}
             <Route path="corporate" element={<CorporateDashboard />} />
+            <Route path="corporate/staff" element={<ManageStaff />} />
+            <Route path="corporate/attendance" element={<AttendanceTracker />} />
+            <Route path="corporate/salary" element={<SalaryCalculator />} />
+            <Route path="corporate/settings" element={<CorporateSettings />} />
           </Route>
 
         </Route>
