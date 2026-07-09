@@ -11,7 +11,7 @@ export default function VendorSidebar({ isOpen, setIsOpen }) {
     navigate("/login");
   };
 
-  // Ye chota function check karega ki konsa page open hai taaki button highlight ho sake
+  // Check active path for highlighting buttons
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -21,74 +21,63 @@ export default function VendorSidebar({ isOpen, setIsOpen }) {
       md:translate-x-0`}
     >
       <div>
-        <div className="mb-8 px-2 flex justify-between items-center">
+        {/* Brand Header */}
+        <div className="mb-10 px-2 flex justify-between items-center mt-2">
           <div>
-            <h2 className="text-xl font-bold tracking-wider text-blue-400">DailyTracker</h2>
-            <p className="text-xs text-emerald-400 font-medium mt-1">● Vendor Panel</p>
+            <h2 className="text-xl font-black tracking-wide text-blue-400">My Tracker</h2>
+            <p className="text-[11px] text-emerald-400 font-bold tracking-widest uppercase mt-1">● Personal Earning</p>
           </div>
-          {/* Mobile par Sidebar close karne ka 'X' button */}
-          <button onClick={() => setIsOpen(false)} className="md:hidden text-slate-400 hover:text-white p-1">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          {/* Mobile Close Button */}
+          <button onClick={() => setIsOpen(false)} className="md:hidden text-slate-400 hover:text-white p-1 bg-slate-800 rounded-md">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <nav className="space-y-1.5">
+        {/* Sidebar Navigation */}
+        <nav className="space-y-2">
+          {/* 1. My Calendar (Main Attendance/Entry) */}
           <Link 
             to="/dashboard/vendor" 
             onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              isActive("/dashboard/vendor") ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"
+            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
+              isActive("/dashboard/vendor") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
             }`}
           >
-            📊 Dashboard Overview
+            <span className="mr-2">📅</span> My Calendar
           </Link>
           
-          <Link 
-            to="/dashboard/vendor/customers" 
-            onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              isActive("/dashboard/vendor/customers") ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"
-            }`}
-          >
-            👥 Manage Customers
-          </Link>
-          
-          <Link 
-            to="/dashboard/vendor/deliveries" 
-            onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              isActive("/dashboard/vendor/deliveries") ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"
-            }`}
-          >
-            ✅ Daily Deliveries
-          </Link>
-
+          {/* 2. Payments & Hisaab (Earnings Summary) */}
           <Link 
             to="/dashboard/vendor/billing" 
             onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              isActive("/dashboard/vendor/billing") ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"
+            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
+              isActive("/dashboard/vendor/billing") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
             }`}
           >
-            💰 Billing & Payments
+            <span className="mr-2">💰</span> Payments & Hisaab
           </Link>
 
+          {/* 3. Profile & Settings */}
           <Link 
             to="/dashboard/vendor/settings" 
             onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-              isActive("/dashboard/vendor/settings") ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"
+            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
+              isActive("/dashboard/vendor/settings") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
             }`}
           >
-            ⚙️ Settings & Profile
+            <span className="mr-2">⚙️</span> Profile & Settings
           </Link>
         </nav>
       </div>
 
-      <button onClick={handleLogout} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-red-950/30 hover:text-red-300 transition-all">
-        🚪 Logout Account
+      {/* Logout Button */}
+      <button 
+        onClick={handleLogout} 
+        className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all flex items-center"
+      >
+        <span className="mr-2">🚪</span> Secure Logout
       </button>
     </aside>
   );

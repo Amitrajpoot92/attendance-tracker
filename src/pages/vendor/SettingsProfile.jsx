@@ -7,9 +7,10 @@ const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 export default function SettingsProfile() {
-  const [shopName, setShopName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [upiId, setUpiId] = useState("");
+  const [currency, setCurrency] = useState("₹");
   
   const [profilePic, setProfilePic] = useState("");
   const [qrCodePic, setQrCodePic] = useState("");
@@ -17,23 +18,25 @@ export default function SettingsProfile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   
-  // Dono uploads ke liye alag loading states taaki UI smooth rahe
+  // Uploading states
   const [uploadingProfile, setUploadingProfile] = useState(false);
   const [uploadingQr, setUploadingQr] = useState(false);
 
   // 1. Fetch Existing Data
   useEffect(() => {
-    const fetchVendorData = async () => {
+    const fetchUserData = async () => {
       if (!auth.currentUser) return;
       try {
-        const vendorRef = doc(db, "vendors", auth.currentUser.uid);
-        const docSnap = await getDoc(vendorRef);
+        // Ab 'users' collection use kar rahe hain personal tracker ke liye
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(userRef);
         
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setShopName(data.shopName || "");
+          setFullName(data.fullName || "");
           setPhone(data.phone || "");
           setUpiId(data.upiId || "");
+          setCurrency(data.currency || "₹");
           setProfilePic(data.profilePic || "");
           setQrCodePic(data.qrCodePic || "");
         }
@@ -43,7 +46,7 @@ export default function SettingsProfile() {
         setLoading(false);
       }
     };
-    fetchVendorData();
+    fetchUserData();
   }, []);
 
   // 2. Direct Cloudinary Upload Logic
@@ -73,12 +76,12 @@ export default function SettingsProfile() {
       if (type === "profile") {
         setProfilePic(newImageUrl);
         if (auth.currentUser) {
-          await setDoc(doc(db, "vendors", auth.currentUser.uid), { profilePic: newImageUrl }, { merge: true });
+          await setDoc(doc(db, "users", auth.currentUser.uid), { profilePic: newImageUrl }, { merge: true });
         }
       } else if (type === "qr") {
         setQrCodePic(newImageUrl);
         if (auth.currentUser) {
-          await setDoc(doc(db, "vendors", auth.currentUser.uid), { qrCodePic: newImageUrl }, { merge: true });
+          await setDoc(doc(db, "users", auth.currentUser.uid), { qrCodePic: newImageUrl }, { merge: true });
         }
       }
     } catch (error) {
@@ -97,11 +100,12 @@ export default function SettingsProfile() {
 
     setSaving(true);
     try {
-      const vendorRef = doc(db, "vendors", auth.currentUser.uid);
-      await setDoc(vendorRef, {
-        shopName,
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      await setDoc(userRef, {
+        fullName,
         phone,
         upiId,
+        currency,
         updatedAt: new Date().toISOString()
       }, { merge: true });
 
@@ -134,15 +138,15 @@ export default function SettingsProfile() {
         
         {/* Header Section */}
         <div className="mb-10 text-center sm:text-left">
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2">Settings & Profile</h1>
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2">My Profile</h1>
           <p className="text-slate-500 font-medium">
-            Manage your business details and payment setup for <span className="text-blue-600 font-bold">AttendanceTracker</span>.
+            Manage your personal details and payment setup for <span className="text-blue-600 font-bold">Personal Tracker</span>.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* LEFT COLUMN: Profile Form (Glassmorphism) */}
+          {/* LEFT COLUMN: Profile Form */}
           <div className="lg:col-span-2">
             <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white shadow-2xl shadow-slate-200/50 overflow-hidden relative group">
               
@@ -159,7 +163,7 @@ export default function SettingsProfile() {
                     {profilePic ? (
                       <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
-                      <span>{shopName ? shopName.charAt(0).toUpperCase() : "V"}</span>
+                      <span>{fullName ? fullName.charAt(0).toUpperCase() : "U"}</span>
                     )}
                     
                     {/* Loading State */}
@@ -174,9 +178,7 @@ export default function SettingsProfile() {
                       <svg className="w-7 h-7 text-white mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                       <span className="text-[10px] font-bold text-white uppercase tracking-wider">Change</span>
                       <input 
-                        type="file" 
-                        accept="image/*" 
-                        className="hidden" 
+                        type="file" accept="image/*" className="hidden" 
                         onChange={(e) => handleImageUpload(e, "profile")}
                         disabled={uploadingProfile}
                       />
@@ -185,49 +187,67 @@ export default function SettingsProfile() {
                 </div>
                 
                 <div className="pt-20 mb-8">
-                  <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">{shopName || "Your Business Name"}</h2>
+                  <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">{fullName || "Your Full Name"}</h2>
                   <p className="text-sm font-medium text-slate-500 mt-1 flex items-center gap-1.5">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Vendor ID: <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">{auth.currentUser?.uid.slice(0, 8)}</span>
+                    User ID: <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">{auth.currentUser?.uid.slice(0, 8)}</span>
                   </p>
                 </div>
 
                 {/* 📝 Settings Form */}
                 <form onSubmit={handleSave} className="space-y-6">
                   
-                  {/* Shop Name */}
+                  {/* Full Name */}
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Business / Shop Name</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
                     <div className="relative group/input">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-slate-400 group-focus-within/input:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        <svg className="h-5 w-5 text-slate-400 group-focus-within/input:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                       </div>
-                      <input type="text" required className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={shopName} onChange={(e) => setShopName(e.target.value)} placeholder="e.g. Sharma Daily Needs" />
+                      <input type="text" required className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="e.g. Ramesh Kumar" />
                     </div>
                   </div>
 
-                  {/* Phone Number */}
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Contact Phone Number</label>
-                    <div className="relative group/input">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-slate-400 group-focus-within/input:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                  {/* Phone & Currency Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Phone Number */}
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-2">Phone Number</label>
+                      <div className="relative group/input">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                          <svg className="h-5 w-5 text-slate-400 group-focus-within/input:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        </div>
+                        <input type="tel" required className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 9876543210" />
                       </div>
-                      <input type="tel" required className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 9876543210" />
+                    </div>
+
+                    {/* Currency Select */}
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-2">Preferred Currency</label>
+                      <select 
+                        value={currency} onChange={(e) => setCurrency(e.target.value)}
+                        className="w-full bg-slate-50 rounded-xl border border-slate-200 px-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800"
+                      >
+                        <option value="₹">₹ (INR - Rupee)</option>
+                        <option value="$">$ (USD - Dollar)</option>
+                        <option value="€">€ (EUR - Euro)</option>
+                        <option value="£">£ (GBP - Pound)</option>
+                        <option value="AED">AED (Dirham)</option>
+                      </select>
                     </div>
                   </div>
 
                   {/* UPI ID */}
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-2 flex justify-between items-center">
-                      UPI ID (For Customer Payments)
-                      <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Secure</span>
+                      UPI ID (Optional)
+                      <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Receive Money</span>
                     </label>
                     <div className="relative group/input">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg className="h-5 w-5 text-slate-400 group-focus-within/input:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                       </div>
-                      <input type="text" className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder="example@ybl" />
+                      <input type="text" className="w-full bg-slate-50 rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-800" value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder="yourname@ybl" />
                     </div>
                   </div>
 
@@ -240,7 +260,7 @@ export default function SettingsProfile() {
                         </div>
                       ) : (
                         <>
-                          <span className="relative z-10">Save Changes</span>
+                          <span className="relative z-10">Save Details</span>
                           <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                         </>
                       )}
@@ -289,9 +309,7 @@ export default function SettingsProfile() {
                 </div>
                 
                 <input 
-                  type="file" 
-                  accept="image/*" 
-                  className="hidden" 
+                  type="file" accept="image/*" className="hidden" 
                   onChange={(e) => handleImageUpload(e, "qr")}
                   disabled={uploadingQr}
                 />
@@ -299,7 +317,7 @@ export default function SettingsProfile() {
 
               <div className="w-full p-4 bg-indigo-50/80 border border-indigo-100 text-indigo-800 text-xs rounded-2xl font-semibold leading-relaxed text-left flex items-start gap-3">
                 <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <p>Upload your PhonePe, Google Pay, or Paytm QR code here. This will be shown to your customers for fast payments.</p>
+                <p>Upload your payment QR code here. Share this directly with contractors or clients when sending your bill.</p>
               </div>
             </div>
           </div>

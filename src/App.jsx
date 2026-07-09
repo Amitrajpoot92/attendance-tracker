@@ -9,14 +9,12 @@ import Login from "./pages/login";
 import DashboardLayout from "./components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 
-// Vendor Pages
+// Personal Tracker Pages (Formerly Vendor)
 import VendorDashboard from "./pages/vendor/VendorDashboard";
-import ManageCustomers from "./pages/vendor/ManageCustomers";   
-import DailyDeliveries from "./pages/vendor/DailyDeliveries";   
 import BillingPayments from "./pages/vendor/BillingPayments";   
 import SettingsProfile from "./pages/vendor/SettingsProfile";   
 
-// Corporate Pages (PagarBook Clone Module)
+// Corporate Pages (Business/Team Module)
 import CorporateDashboard from "./pages/corporate/CorporateDashboard";
 import ManageStaff from "./pages/corporate/ManageStaff";
 import AttendanceTracker from "./pages/corporate/AttendanceTracker";
@@ -32,14 +30,13 @@ function App() {
         <Route path="/register" element={<Register />} /> 
         <Route path="/login" element={<Login />} /> 
 
-        {/* Locked Routes */}
+        {/* Locked Routes (Require Authentication) */}
         <Route element={<ProtectedRoute />}>
           
           <Route path="/dashboard" element={<DashboardLayout />}>
-            {/* Vendor Sub-Routes */}
+            
+            {/* Personal Tracker Sub-Routes */}
             <Route path="vendor" element={<VendorDashboard />} />
-            <Route path="vendor/customers" element={<ManageCustomers />} />
-            <Route path="vendor/deliveries" element={<DailyDeliveries />} />
             <Route path="vendor/billing" element={<BillingPayments />} />
             <Route path="vendor/settings" element={<SettingsProfile />} />
 
@@ -49,6 +46,7 @@ function App() {
             <Route path="corporate/attendance" element={<AttendanceTracker />} />
             <Route path="corporate/salary" element={<SalaryCalculator />} />
             <Route path="corporate/settings" element={<CorporateSettings />} />
+            
           </Route>
 
         </Route>
