@@ -8,7 +8,12 @@ export default function DashboardLayout() {
   // Sidebar open/close control karne ke liye state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
-  const isVendorRoute = location.pathname.includes("/dashboard/vendor");
+  const isVendorRoute = 
+    location.pathname.includes("/dashboard/vendor") ||
+    location.pathname.includes("/milk-tracker") ||
+    location.pathname.includes("/maid-attendance-tracker") ||
+    location.pathname.includes("/worker-attendance-tracker") ||
+    location.pathname.includes("/customer-ledger");
 
   return (
     <div className="min-h-screen bg-slate-50 flex">

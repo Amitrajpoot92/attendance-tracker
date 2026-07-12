@@ -11,6 +11,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Personal Tracker Pages (Formerly Vendor)
 import VendorDashboard from "./pages/vendor/VendorDashboard";
+import WorkerTracker from "./pages/vendor/WorkerTracker";
+import MilkTracker from "./pages/vendor/MilkTracker";
+import MaidTracker from "./pages/vendor/MaidTracker";
+import CustomerLedger from "./pages/vendor/CustomerLedger";
 import BillingPayments from "./pages/vendor/BillingPayments";   
 import SettingsProfile from "./pages/vendor/SettingsProfile";   
 
@@ -34,19 +38,25 @@ function App() {
         <Route element={<ProtectedRoute />}>
           
           <Route path="/dashboard" element={<DashboardLayout />}>
-            
             {/* Personal Tracker Sub-Routes */}
             <Route path="vendor" element={<VendorDashboard />} />
             <Route path="vendor/billing" element={<BillingPayments />} />
             <Route path="vendor/settings" element={<SettingsProfile />} />
-
+            
             {/* Corporate Sub-Routes */}
             <Route path="corporate" element={<CorporateDashboard />} />
             <Route path="corporate/staff" element={<ManageStaff />} />
             <Route path="corporate/attendance" element={<AttendanceTracker />} />
             <Route path="corporate/salary" element={<SalaryCalculator />} />
             <Route path="corporate/settings" element={<CorporateSettings />} />
-            
+          </Route>
+
+          {/* Absolute paths for sub-trackers using the same DashboardLayout */}
+          <Route element={<DashboardLayout />}>
+            <Route path="/milk-tracker" element={<MilkTracker />} />
+            <Route path="/maid-attendance-tracker" element={<MaidTracker />} />
+            <Route path="/worker-attendance-tracker" element={<WorkerTracker />} />
+            <Route path="/customer-ledger" element={<CustomerLedger />} />
           </Route>
 
         </Route>

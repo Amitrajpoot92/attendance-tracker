@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // B2C Personal Tracker Collections
+    // Recursively locks users/{uid} and all sub-collections (jobs, attendance, monthlyStats, milkmen, maids, shops, etc.) to the owner UID
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // B2B Corporate: staff collection
+    match /staff/{staffId} {
+      allow read, delete: if request.auth != null && resource.data.adminId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.adminId == request.auth.uid;
+      allow update: if request.auth != null && resource.data.adminId == request.auth.uid && request.resource.data.adminId == request.auth.uid;
+    }
+
+    // B2B Corporate: daily_attendance collection
+    match /daily_attendance/{attendanceId} {
+      allow read, delete: if request.auth != null && resource.data.adminId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.adminId == request.auth.uid;
+      allow update: if request.auth != null && resource.data.adminId == request.auth.uid && request.resource.data.adminId == request.auth.uid;
+    }
+
+    // B2B Corporate: corporate_settings collection
+    match /corporate_settings/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Legacy/Template: customers collection
+    match /customers/{customerId} {
+      allow read, delete: if request.auth != null && resource.data.vendorId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.vendorId == request.auth.uid;
+      allow update: if request.auth != null && resource.data.vendorId == request.auth.uid && request.resource.data.vendorId == request.auth.uid;
+    }
+  }
+}

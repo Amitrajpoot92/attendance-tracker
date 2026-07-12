@@ -36,39 +36,91 @@ export default function VendorSidebar({ isOpen, setIsOpen }) {
         </div>
 
         {/* Sidebar Navigation */}
-        <nav className="space-y-2">
-          {/* 1. My Calendar (Main Attendance/Entry) */}
+        <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-180px)] pr-1">
+          {/* 1. Selector Hub */}
           <Link 
             to="/dashboard/vendor" 
             onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
+            className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
               isActive("/dashboard/vendor") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
             }`}
           >
-            <span className="mr-2">📅</span> My Calendar
-          </Link>
-          
-          {/* 2. Payments & Hisaab (Earnings Summary) */}
-          <Link 
-            to="/dashboard/vendor/billing" 
-            onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
-              isActive("/dashboard/vendor/billing") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-            }`}
-          >
-            <span className="mr-2">💰</span> Payments & Hisaab
+            <span className="mr-2">🎛️</span> Tracker Hub
           </Link>
 
-          {/* 3. Profile & Settings */}
-          <Link 
-            to="/dashboard/vendor/settings" 
-            onClick={() => setIsOpen(false)} 
-            className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all ${
-              isActive("/dashboard/vendor/settings") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-            }`}
-          >
-            <span className="mr-2">⚙️</span> Profile & Settings
-          </Link>
+          <div className="border-t border-slate-800 my-2 pt-2">
+            <p className="text-[10px] uppercase font-black tracking-widest text-slate-500 px-4 mb-2">Modules</p>
+            
+            {/* Milk Tracker */}
+            <Link 
+              to="/milk-tracker" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/milk-tracker") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">🥛</span> Milk Tracker
+            </Link>
+
+            {/* Maid Tracker */}
+            <Link 
+              to="/maid-attendance-tracker" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/maid-attendance-tracker") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">🧹</span> Maid Attendance
+            </Link>
+
+            {/* Worker Tracker */}
+            <Link 
+              to="/worker-attendance-tracker" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/worker-attendance-tracker") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">👷</span> Worker Attendance
+            </Link>
+
+            {/* Customer Ledger */}
+            <Link 
+              to="/customer-ledger" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/customer-ledger") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">📓</span> Khata Ledger
+            </Link>
+          </div>
+
+          <div className="border-t border-slate-800 my-2 pt-2">
+            <p className="text-[10px] uppercase font-black tracking-widest text-slate-500 px-4 mb-2">Finance & Account</p>
+
+            {/* Payments & Hisaab (Earnings Summary) */}
+            <Link 
+              to="/dashboard/vendor/billing" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/dashboard/vendor/billing") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">💰</span> Payments & Hisaab
+            </Link>
+
+            {/* Profile & Settings */}
+            <Link 
+              to="/dashboard/vendor/settings" 
+              onClick={() => setIsOpen(false)} 
+              className={`block px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                isActive("/dashboard/vendor/settings") ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+            >
+              <span className="mr-2">⚙️</span> Profile & Settings
+            </Link>
+          </div>
         </nav>
       </div>
 
